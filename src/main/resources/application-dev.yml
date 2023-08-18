@@ -8,6 +8,7 @@ spring:
     username: ${app.db.user}
     password: ${app.db.password}
   jpa:
+    show-sql: true
     open-in-view: false
     hibernate:
       ddl-auto: none
@@ -32,6 +33,10 @@ logging:
   level:
     com.pavbatol: DEBUG
     org.springframework.web: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+        type.descriptor.sql.BasicBinder: TRACE
 
 app:
   db:

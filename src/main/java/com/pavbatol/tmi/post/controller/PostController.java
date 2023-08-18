@@ -10,12 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Post office", description = "API for working with Posts")
@@ -50,7 +53,7 @@ public class PostController {
 
     @GetMapping("/{postId}")
     @Operation(summary = "findById", description = "getting a Post by Id")
-    public ResponseEntity<PostDto> findById(@PathVariable("postId") Long postId) {
+    public ResponseEntity<PostDto> findById(@PathVariable("postId") Integer postId) {
         log.debug("GET findById() with postId {}", postId);
         PostDto body = service.findById(postId);
         return ResponseEntity.ok(body);
@@ -59,8 +62,8 @@ public class PostController {
     @GetMapping
     @Operation(summary = "findAll", description = "find all Posts getting page by page")
     public ResponseEntity<List<PostDto>> findAll(
-            @RequestParam(value = "lastPostId", defaultValue = "0") Long lastPostId,
-            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+            @Min(0) @RequestParam(value = "lastPostId", defaultValue = "0") Integer lastPostId,
+            @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         log.debug("GET findAll() with lastPostId: {}, size: {}", lastPostId, pageSize);
         List<PostDto> body = service.findAll(lastPostId, pageSize);
         return ResponseEntity.ok(body);

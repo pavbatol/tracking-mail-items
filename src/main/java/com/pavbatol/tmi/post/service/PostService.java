@@ -13,7 +13,7 @@ public interface PostService {
 
     void remove(Integer postId);
 
-    PostDto findById(Long postId);
+    PostDto findById(Integer postId);
 
-    List<PostDto> findAll(Long lastPostId, Integer size);
+    List<PostDto> findAll(Integer lastPostId, Integer pageSize);
 }
