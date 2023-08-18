@@ -36,7 +36,7 @@ public class PostController {
     ResponseEntity<PostDto> update(@PathVariable(value = "postId") Integer postId,
                                    @Valid @RequestBody PostDtoUpdate dto) {
         log.debug("PATCH (update) with postId: {}, dto: {}", postId, dto);
-        PostDto body = service.update(dto);
+        PostDto body = service.update(postId, dto);
         return ResponseEntity.ok(body);
     }
 

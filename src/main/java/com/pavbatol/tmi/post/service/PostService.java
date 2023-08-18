@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostService {
     PostDto add(PostDtoAddRequest dto);
 
-    PostDto update(PostDtoUpdate dto);
+    PostDto update(Integer postId, PostDtoUpdate dto);
 
     void remove(Integer postId);
 

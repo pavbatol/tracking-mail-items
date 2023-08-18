@@ -3,6 +3,7 @@ package com.pavbatol.tmi.movement.model;
 import lombok.NonNull;
 
 public enum MoveType {
+    REGISTERED,
     ARRIVED,
     DEPARTED;
 
