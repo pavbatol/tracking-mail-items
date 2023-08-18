@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS items (
     receiver_address VARCHAR(255) NOT NULL,
     receiver_name VARCHAR(255) NOT NULL,
     CONSTRAINT pk_items PRIMARY KEY (item_id),
-    CONSTRAINT fk_items_post_code_to_posts FOREIGN KEY (post_code) REFERENCES posts(post_code)
+    CONSTRAINT fk_items_post_code_to_posts FOREIGN KEY (post_code) REFERENCES posts(post_code) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS movement (
@@ -24,6 +24,6 @@ CREATE TABLE IF NOT EXISTS movement (
     move_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     CONSTRAINT pk_movements PRIMARY KEY (movement_id),
     CONSTRAINT uc_movement_item_id_post_code UNIQUE (item_id, post_code),
-    CONSTRAINT FK_MOVEMENTS_ON_ITEM_ID FOREIGN KEY (item_id) REFERENCES items (item_id),
-    CONSTRAINT FK_MOVEMENTS_ON_POST_CODE FOREIGN KEY (post_code) REFERENCES posts (post_code)
+    CONSTRAINT FK_MOVEMENTS_ON_ITEM_ID FOREIGN KEY (item_id) REFERENCES items (item_id) ON DELETE CASCADE,
+    CONSTRAINT FK_MOVEMENTS_ON_POST_CODE FOREIGN KEY (post_code) REFERENCES posts (post_code) ON DELETE CASCADE
 )
