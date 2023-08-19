@@ -7,7 +7,7 @@ public enum MoveType {
     ARRIVED,
     DEPARTED;
 
-    MoveType from(@NonNull String name) throws IllegalArgumentException {
+    public static MoveType from(@NonNull String name) throws IllegalArgumentException {
         try {
             return MoveType.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {
