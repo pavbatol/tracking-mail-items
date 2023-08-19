@@ -20,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private static final String ENTITY_SIMPLE_NAME = Post.class.getSimpleName();
+    private static final String POST_CODE = "postCode";
     private final PostJpaRepository repository;
     private final PostMapper mapper;
 
@@ -55,12 +56,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> findAll(Integer lastPostId, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.ASC, "postCode"));
-//        List<Post> found = repository.findAllByPagination(lastPostId, pageRequest);
-        List<Post> found = repository.findAllByPagination(lastPostId, Sort.Direction.ASC.name(), pageRequest);
-//        List<Post> found = repository.findAllByPostCodeLessThan(lastPostId, pageRequest);
+        Sort.Direction direction = Sort.Direction.ASC;
+        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(direction, POST_CODE));
+        List<Post> found = repository.findAllByPagination(lastPostId, direction.name(), pageRequest);
         log.debug("Found {}s in the amount of {}, by lastPostId: {}, pageSize: {}, direction: {}",
-                ENTITY_SIMPLE_NAME, found.size(), lastPostId, pageSize, pageRequest.getSort().getOrderFor("postCode"));
+                ENTITY_SIMPLE_NAME, found.size(), lastPostId, pageSize, pageRequest.getSort().getOrderFor(POST_CODE));
         return mapper.toDtos(found);
     }
 }
