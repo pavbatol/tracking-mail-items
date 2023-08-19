@@ -4,6 +4,7 @@ import com.pavbatol.tmi.item.dto.ItemDto;
 import com.pavbatol.tmi.item.dto.ItemDtoAddRequest;
 import com.pavbatol.tmi.item.dto.ItemDtoUpdate;
 import com.pavbatol.tmi.item.model.ItemSort;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -16,5 +17,10 @@ public interface ItemService {
 
     ItemDto findById(Long itemId);
 
-    List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort);
+    //    List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort, Sort.Direction sortDirection);
+    List<ItemDto> findAll(Long lastIdValue,
+                          String lastSortFieldValue,
+                          ItemSort itemSort,
+                          Sort.Direction direction,
+                          Integer limit);
 }

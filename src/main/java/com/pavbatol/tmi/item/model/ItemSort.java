@@ -3,8 +3,10 @@ package com.pavbatol.tmi.item.model;
 import lombok.NonNull;
 
 public enum ItemSort {
-    RECEIVER_NAME,
-    ITEM_TYPE;
+    ID,
+    TYPE,
+    NAME,
+    ADDRESS;
 
     public static ItemSort from(@NonNull String name) throws IllegalArgumentException {
         try {

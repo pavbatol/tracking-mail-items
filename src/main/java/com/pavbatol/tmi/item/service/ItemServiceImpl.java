@@ -8,10 +8,8 @@ import com.pavbatol.tmi.item.mapper.ItemMapper;
 import com.pavbatol.tmi.item.model.Item;
 import com.pavbatol.tmi.item.model.ItemSort;
 import com.pavbatol.tmi.item.repository.ItemJpaRepository;
-import com.pavbatol.tmi.post.model.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -56,24 +54,51 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort) {
-//        String sortingField = itemSort == ItemSort.ITEM_TYPE ? "type" : "receiverName";
-        String sortingField;
+//    public List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort, Sort.Direction sortDirection) {
+    public List<ItemDto> findAll(Long lastIdValue,
+                                 String lastSortFieldValue,
+                                 ItemSort itemSort,
+                                 Sort.Direction direction,
+                                 Integer limit) {
+        String sortFieldName;
         switch (itemSort) {
-            case ITEM_TYPE:
-                sortingField = "type";
+            case ID:
+                sortFieldName = "id";
                 break;
-            case RECEIVER_NAME:
-                sortingField = "receiverName";
+            case TYPE:
+                sortFieldName = "type";
+                break;
+            case NAME:
+                sortFieldName = "receiverName";
+                break;
+            case ADDRESS:
+                sortFieldName = "receiverAddress";
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported ItemSort value" + itemSort);
         }
-        Sort.Direction direction = Sort.Direction.ASC;
-        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(direction, sortingField));
-        List<Item> found = repository.findAllByPagination(lastItemId, direction.name(), pageRequest);
-        log.debug("Found {}s in the amount of {}, by lastPostId: {}, pageSize: {}, direction: {}",
-                ENTITY_SIMPLE_NAME, found.size(), lastItemId, pageSize, pageRequest.getSort().getOrderFor(sortingField));
+//        Sort.Direction direction = Sort.Direction.ASC;
+//        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(direction, sortingField));
+//        List<Item> found = repository.findAllByPagination(lastItemId, direction.name(), pageRequest);
+
+//        List<Item> found = repository.findAllByPagination_2(lastItemId, direction.name(), sortingField, 2);
+
+//        List<Item> found = repository.findAllByPagination_2(lastItemId, "ASC", "item_id",  pageSize);
+//        List<Item> found = repository.findAllByPagination_2(lastItemId, sortDirection.name(), "item_id",  pageSize);
+//        List<Item> found = repository.findAllByPagination_2(lastItemId, sortDirection.name(),  pageSize);
+
+
+        List<Item> found = repository.findAllByPagination_3(
+                lastIdValue,
+                lastSortFieldValue,
+                sortFieldName,
+                direction,
+                limit);
+
+//        log.debug("Found {}s in the amount of {}, by lastItemId: {}, pageSize: {}, direction: {}",
+//                ENTITY_SIMPLE_NAME, found.size(), lastItemId, pageSize, sortDirection);
+        log.debug("Found {}s in the amount of {}, by lastIdValue: {}, lastSortFieldValue: {}, sortFieldName: {}, direction: {}, limit: {}",
+                ENTITY_SIMPLE_NAME, found.size(), lastIdValue, lastSortFieldValue, sortFieldName, direction, limit);
         return mapper.toDtos(found);
     }
 }

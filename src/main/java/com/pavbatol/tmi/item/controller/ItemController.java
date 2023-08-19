@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -64,13 +65,18 @@ public class ItemController {
     @GetMapping
     @Operation(summary = "findAll", description = "find all Items getting page by page")
     public ResponseEntity<List<ItemDto>> findAll(
-            @PositiveOrZero() @RequestParam(value = "lastItemId", defaultValue = "0") Long lastItemId,
-            @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-            @RequestParam(value = "sort") String sort) {
+            @PositiveOrZero() @RequestParam(value = "lastItemId", required = false) Long lastItemId,
+            @RequestParam(value = "lastSortFieldValue", required = false) String lastSortFieldValue,
+            @RequestParam(value = "sort", required = false) String sort,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
         log.debug("GET findAll() with lastItemId: {}, size: {}, sort: {}", lastItemId, pageSize, sort);
 
-        ItemSort itemSort = sort != null ? ItemSort.from(sort) : ItemSort.ITEM_TYPE;
-        List<ItemDto> body = service.findAll(lastItemId, pageSize, itemSort);
+        ItemSort itemSort = sort != null ? ItemSort.from(sort) : ItemSort.TYPE;
+        Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
+//        List<ItemDto> body = service.findAll(lastItemId, pageSize, itemSort, sortDirection);
+        List<ItemDto> body = service.findAll(lastItemId, lastSortFieldValue, itemSort, sortDirection, pageSize);
         return ResponseEntity.ok(body);
     }
 }
