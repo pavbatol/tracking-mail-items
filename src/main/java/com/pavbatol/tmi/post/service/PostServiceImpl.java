@@ -1,5 +1,6 @@
 package com.pavbatol.tmi.post.service;
 
+import com.pavbatol.tmi.app.exception.ConflictException;
 import com.pavbatol.tmi.app.util.Checker;
 import com.pavbatol.tmi.post.dto.PostDto;
 import com.pavbatol.tmi.post.dto.PostDtoAddRequest;
@@ -26,6 +27,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto add(PostDtoAddRequest dto) {
+        if (repository.existsById(dto.getPostCode())) {
+            throw new ConflictException("Post office with such post-code already exists");
+        }
         Post entity = mapper.toEntity(dto);
         Post saved = repository.save(entity);
         log.debug("New {} saved: {}", ENTITY_SIMPLE_NAME, saved);

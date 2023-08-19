@@ -1,5 +1,6 @@
 package com.pavbatol.tmi.app.exception.handler;
 
+import com.pavbatol.tmi.app.exception.ConflictException;
 import com.pavbatol.tmi.app.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,6 +67,11 @@ public class RestErrorHandler {
     @ExceptionHandler({NotFoundException.class})
     protected ResponseEntity<Object> handleNotFoundEx(NotFoundException ex, WebRequest request) {
         return makeResponseEntity(ex.getReason(), ex, NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({ConflictException.class})
+    protected ResponseEntity<Object> handleConflictEx(ConflictException ex, WebRequest request) {
+        return makeResponseEntity(ex.getReason(), ex, CONFLICT, request);
     }
 
     @ExceptionHandler({IllegalArgumentException.class})

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Slf4j
@@ -62,7 +63,7 @@ public class PostController {
     @GetMapping
     @Operation(summary = "findAll", description = "find all Posts getting page by page")
     public ResponseEntity<List<PostDto>> findAll(
-            @Min(0) @RequestParam(value = "lastPostId", defaultValue = "0") Integer lastPostId,
+            @PositiveOrZero() @RequestParam(value = "lastPostId", defaultValue = "0") Integer lastPostId,
             @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         log.debug("GET findAll() with lastPostId: {}, size: {}", lastPostId, pageSize);
         List<PostDto> body = service.findAll(lastPostId, pageSize);
