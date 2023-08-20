@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS operations (
     post_code BIGINT NOT NULL,
     type VARCHAR(50) NOT NULL,
     operated_on TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    CONSTRAINT uc_operations_item_id_post_code UNIQUE (item_id, post_code),
     CONSTRAINT fk_operations_on_item_id FOREIGN KEY (item_id) REFERENCES items (item_id) ON DELETE CASCADE,
     CONSTRAINT fk_operations_on_post_code FOREIGN KEY (post_code) REFERENCES posts (post_code) ON DELETE CASCADE
 )

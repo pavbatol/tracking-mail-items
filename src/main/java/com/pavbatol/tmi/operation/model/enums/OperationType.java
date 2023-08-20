@@ -5,7 +5,8 @@ import lombok.NonNull;
 public enum OperationType {
     REGISTER,
     ARRIVE,
-    DEPART;
+    DEPART,
+    HAND_OVER;
 
     public static OperationType from(@NonNull String name) throws IllegalArgumentException {
         try {

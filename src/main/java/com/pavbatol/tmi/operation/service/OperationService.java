@@ -21,7 +21,7 @@ public interface OperationService {
     List<OperationDto> findAll(OperationFilter filter,
                                Long lastIdValue,
                                String lastSortFieldValue,
-                               OperationSort itemSort,
-                               Sort.Direction sortDirection,
-                               Integer pageSize);
+                               OperationSort sort,
+                               Sort.Direction direction,
+                               Integer limit);
 }
