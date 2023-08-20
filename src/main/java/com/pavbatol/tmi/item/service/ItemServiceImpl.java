@@ -54,40 +54,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-//    public List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort, Sort.Direction sortDirection) {
     public List<ItemDto> findAll(Long lastIdValue,
                                  String lastSortFieldValue,
                                  ItemSort itemSort,
                                  Sort.Direction direction,
                                  Integer limit) {
-        String sortFieldName;
-        switch (itemSort) {
-            case ID:
-                sortFieldName = "id";
-                break;
-            case TYPE:
-                sortFieldName = "type";
-                break;
-            case NAME:
-                sortFieldName = "receiverName";
-                break;
-            case ADDRESS:
-                sortFieldName = "receiverAddress";
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported ItemSort value" + itemSort);
-        }
-//        Sort.Direction direction = Sort.Direction.ASC;
-//        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(direction, sortingField));
-//        List<Item> found = repository.findAllByPagination(lastItemId, direction.name(), pageRequest);
 
-//        List<Item> found = repository.findAllByPagination_2(lastItemId, direction.name(), sortingField, 2);
-
-//        List<Item> found = repository.findAllByPagination_2(lastItemId, "ASC", "item_id",  pageSize);
-//        List<Item> found = repository.findAllByPagination_2(lastItemId, sortDirection.name(), "item_id",  pageSize);
-//        List<Item> found = repository.findAllByPagination_2(lastItemId, sortDirection.name(),  pageSize);
-
-
+        String sortFieldName = itemSort.getFieldName();
         List<Item> found = repository.findAllByPagination_3(
                 lastIdValue,
                 lastSortFieldValue,
@@ -95,8 +68,6 @@ public class ItemServiceImpl implements ItemService {
                 direction,
                 limit);
 
-//        log.debug("Found {}s in the amount of {}, by lastItemId: {}, pageSize: {}, direction: {}",
-//                ENTITY_SIMPLE_NAME, found.size(), lastItemId, pageSize, sortDirection);
         log.debug("Found {}s in the amount of {}, by lastIdValue: {}, lastSortFieldValue: {}, sortFieldName: {}, direction: {}, limit: {}",
                 ENTITY_SIMPLE_NAME, found.size(), lastIdValue, lastSortFieldValue, sortFieldName, direction, limit);
         return mapper.toDtos(found);

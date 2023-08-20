@@ -17,7 +17,6 @@ public interface ItemService {
 
     ItemDto findById(Long itemId);
 
-    //    List<ItemDto> findAll(Long lastItemId, Integer pageSize, ItemSort itemSort, Sort.Direction sortDirection);
     List<ItemDto> findAll(Long lastIdValue,
                           String lastSortFieldValue,
                           ItemSort itemSort,

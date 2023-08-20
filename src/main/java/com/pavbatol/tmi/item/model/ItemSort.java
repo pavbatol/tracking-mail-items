@@ -1,12 +1,18 @@
 package com.pavbatol.tmi.item.model;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@Getter
+@RequiredArgsConstructor
 public enum ItemSort {
-    ID,
-    TYPE,
-    NAME,
-    ADDRESS;
+    ID("id"),
+    TYPE("type"),
+    NAME("receiverName"),
+    ADDRESS("receiverAddress");
+
+    private final String fieldName;
 
     public static ItemSort from(@NonNull String name) throws IllegalArgumentException {
         try {

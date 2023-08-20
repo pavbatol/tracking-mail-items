@@ -63,19 +63,18 @@ public class ItemController {
     }
 
     @GetMapping
-    @Operation(summary = "findAll", description = "find all Items getting page by page")
+    @Operation(summary = "findAll", description = "find all Items getting page by page by KeySet pagination")
     public ResponseEntity<List<ItemDto>> findAll(
-            @PositiveOrZero() @RequestParam(value = "lastItemId", required = false) Long lastItemId,
+            @RequestParam(value = "lastItemId", required = false) @PositiveOrZero() Long lastItemId,
             @RequestParam(value = "lastSortFieldValue", required = false) String lastSortFieldValue,
             @RequestParam(value = "sort", required = false) String sort,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
-    ) {
-        log.debug("GET findAll() with lastItemId: {}, size: {}, sort: {}", lastItemId, pageSize, sort);
+            @RequestParam(value = "pageSize", defaultValue = "10") @Min(1) Integer pageSize) {
+        log.debug("GET findAll() with lastItemId: {}, lastSortFieldValue: {}, sort: {}, direction: {}, pageSize: {}",
+                lastItemId, lastSortFieldValue, sort, direction, pageSize);
 
         ItemSort itemSort = sort != null ? ItemSort.from(sort) : ItemSort.TYPE;
         Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
-//        List<ItemDto> body = service.findAll(lastItemId, pageSize, itemSort, sortDirection);
         List<ItemDto> body = service.findAll(lastItemId, lastSortFieldValue, itemSort, sortDirection, pageSize);
         return ResponseEntity.ok(body);
     }

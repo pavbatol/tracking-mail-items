@@ -73,7 +73,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
         return query.from(qItem).where(builder).fetch();
     }
 
-    // TODO: 19.08.2023 Consider lastIdValue !=null, lastSortFieldValue -- nul, sortFieldName != null
+    // TODO: 19.08.2023 Consider lastIdValue !=null, lastSortFieldValue == nul, sortFieldName != null
     private void correctAndCheckArguments(Long lastIdValue, String lastSortFieldValue, String sortFieldName) {
         if (lastIdValue != null && sortFieldName == null) {
             lastSortFieldValue = lastSortFieldValue != null ? lastSortFieldValue : String.valueOf(lastIdValue);
