@@ -1,6 +1,7 @@
 package com.pavbatol.tmi.operation.model;
 
 import com.pavbatol.tmi.item.model.Item;
+import com.pavbatol.tmi.operation.model.enums.OperationType;
 import com.pavbatol.tmi.post.model.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -33,9 +35,9 @@ public class Operation {
     Post post;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "operation_type", nullable = false)
+    @Column(name = "type", nullable = false)
     OperationType type;
 
-    @Column(name = "operation_time", nullable = false)
-    LockModeType timestamp;
+    @Column(name = "operated_on", nullable = false)
+    LocalDateTime operatedOn;
 }
