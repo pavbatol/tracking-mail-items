@@ -1,4 +1,4 @@
-package com.pavbatol.tmi.movement.model;
+package com.pavbatol.tmi.operation.model;
 
 import com.pavbatol.tmi.item.model.Item;
 import com.pavbatol.tmi.post.model.Post;
@@ -15,13 +15,13 @@ import javax.persistence.*;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "movements", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_movement_item_id_post_code", columnNames = {"item_id", "post_code"})
+@Table(name = "operations", uniqueConstraints = {
+        @UniqueConstraint(name = "uc_operations_item_id_post_code", columnNames = {"item_id", "post_code"})
 })
-public class Movement {
+public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movement_id", nullable = false)
+    @Column(name = "operation_id", nullable = false)
     Long id;
 
     @ManyToOne
@@ -33,9 +33,9 @@ public class Movement {
     Post post;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "move_type", nullable = false)
-    MoveType type;
+    @Column(name = "operation_type", nullable = false)
+    OperationType type;
 
-    @Column(name = "move_time", nullable = false)
-    LockModeType moveTime;
+    @Column(name = "operation_time", nullable = false)
+    LockModeType timestamp;
 }
