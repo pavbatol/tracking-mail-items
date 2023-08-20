@@ -1,5 +1,6 @@
 package com.pavbatol.tmi.item.service;
 
+import com.pavbatol.tmi.app.exception.ValidationException;
 import com.pavbatol.tmi.app.util.Checker;
 import com.pavbatol.tmi.item.dto.ItemDto;
 import com.pavbatol.tmi.item.dto.ItemDtoAddRequest;
@@ -60,16 +61,22 @@ public class ItemServiceImpl implements ItemService {
                                  Sort.Direction direction,
                                  Integer limit) {
 
-        String sortFieldName = itemSort.getFieldName();
-        List<Item> found = repository.findAllByPagination_3(
+        if ((lastIdValue != null || lastSortFieldValue != null) && itemSort == null) {
+            throw new ValidationException("Missing 'itemSort' when specified 'lastIdValue' or 'lastSortFieldValue' argument");
+        }
+        if (itemSort == null) {
+            itemSort = ItemSort.TYPE;
+        }
+
+        List<Item> found = repository.findAllByPagination(
                 lastIdValue,
                 lastSortFieldValue,
-                sortFieldName,
+                itemSort.getFieldName(),
                 direction,
                 limit);
 
         log.debug("Found {}s in the amount of {}, by lastIdValue: {}, lastSortFieldValue: {}, sortFieldName: {}, direction: {}, limit: {}",
-                ENTITY_SIMPLE_NAME, found.size(), lastIdValue, lastSortFieldValue, sortFieldName, direction, limit);
+                ENTITY_SIMPLE_NAME, found.size(), lastIdValue, lastSortFieldValue, itemSort.getFieldName(), direction, limit);
         return mapper.toDtos(found);
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface CustomItemRepository {
-    List<Item> findAllByPagination_3(Long lastIdValue,
-                                     String lastSortFieldValue,
-                                     String sortFieldName,
-                                     Sort.Direction direction,
-                                     Integer limit);
+    List<Item> findAllByPagination(Long lastIdValue,
+                                   String lastSortFieldValue,
+                                   String sortFieldName,
+                                   Sort.Direction direction,
+                                   Integer limit);
 }
