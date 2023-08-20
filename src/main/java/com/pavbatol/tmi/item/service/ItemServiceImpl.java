@@ -7,7 +7,7 @@ import com.pavbatol.tmi.item.dto.ItemDtoAddRequest;
 import com.pavbatol.tmi.item.dto.ItemDtoUpdate;
 import com.pavbatol.tmi.item.mapper.ItemMapper;
 import com.pavbatol.tmi.item.model.Item;
-import com.pavbatol.tmi.item.model.ItemSort;
+import com.pavbatol.tmi.item.model.enums.ItemSort;
 import com.pavbatol.tmi.item.repository.ItemJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

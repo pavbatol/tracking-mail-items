@@ -1,6 +1,6 @@
 package com.pavbatol.tmi.item.dto;
 
-import com.pavbatol.tmi.item.model.ItemType;
+import com.pavbatol.tmi.item.model.enums.ItemType;
 import com.pavbatol.tmi.post.dto.PostDto;
 import lombok.Value;
 

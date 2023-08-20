@@ -2,8 +2,8 @@ package com.pavbatol.tmi.item.repository;
 
 import com.pavbatol.tmi.app.exception.ValidationException;
 import com.pavbatol.tmi.item.model.Item;
-import com.pavbatol.tmi.item.model.ItemSort;
-import com.pavbatol.tmi.item.model.ItemType;
+import com.pavbatol.tmi.item.model.enums.ItemSort;
+import com.pavbatol.tmi.item.model.enums.ItemType;
 import com.pavbatol.tmi.item.model.QItem;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.EnumPath;

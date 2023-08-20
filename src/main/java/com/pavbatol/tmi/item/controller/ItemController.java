@@ -3,7 +3,7 @@ package com.pavbatol.tmi.item.controller;
 import com.pavbatol.tmi.item.dto.ItemDto;
 import com.pavbatol.tmi.item.dto.ItemDtoAddRequest;
 import com.pavbatol.tmi.item.dto.ItemDtoUpdate;
-import com.pavbatol.tmi.item.model.ItemSort;
+import com.pavbatol.tmi.item.model.enums.ItemSort;
 import com.pavbatol.tmi.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

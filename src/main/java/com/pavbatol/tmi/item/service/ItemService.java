@@ -3,7 +3,7 @@ package com.pavbatol.tmi.item.service;
 import com.pavbatol.tmi.item.dto.ItemDto;
 import com.pavbatol.tmi.item.dto.ItemDtoAddRequest;
 import com.pavbatol.tmi.item.dto.ItemDtoUpdate;
-import com.pavbatol.tmi.item.model.ItemSort;
+import com.pavbatol.tmi.item.model.enums.ItemSort;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

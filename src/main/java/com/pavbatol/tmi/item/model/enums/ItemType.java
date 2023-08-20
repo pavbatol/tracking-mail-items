@@ -1,4 +1,4 @@
-package com.pavbatol.tmi.item.model;
+package com.pavbatol.tmi.item.model.enums;
 
 import lombok.NonNull;
 

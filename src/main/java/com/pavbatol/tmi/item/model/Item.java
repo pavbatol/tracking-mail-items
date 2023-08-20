@@ -1,5 +1,6 @@
 package com.pavbatol.tmi.item.model;
 
+import com.pavbatol.tmi.item.model.enums.ItemType;
 import com.pavbatol.tmi.post.model.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
