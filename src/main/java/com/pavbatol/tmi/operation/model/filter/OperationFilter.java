@@ -10,7 +10,7 @@ import java.util.List;
 public class OperationFilter {
     List<Long> ItemIds;
 
-    List<Long> PostCodes;
+    List<Integer> PostCodes;
 
     String type;
 
