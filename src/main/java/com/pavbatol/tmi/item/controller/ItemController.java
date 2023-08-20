@@ -72,8 +72,6 @@ public class ItemController {
             @RequestParam(value = "pageSize", defaultValue = "10") @Min(1) Integer pageSize) {
         log.debug("GET findAll() with lastItemId: {}, lastSortFieldValue: {}, sort: {}, direction: {}, pageSize: {}",
                 lastIdValue, lastSortFieldValue, sort, direction, pageSize);
-
-//        ItemSort itemSort = sort != null ? ItemSort.from(sort) : ItemSort.TYPE;
         ItemSort itemSort = sort != null ? ItemSort.from(sort) : null;
         Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
         List<ItemDto> body = service.findAll(lastIdValue, lastSortFieldValue, itemSort, sortDirection, pageSize);

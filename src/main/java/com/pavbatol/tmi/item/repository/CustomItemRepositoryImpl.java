@@ -2,6 +2,7 @@ package com.pavbatol.tmi.item.repository;
 
 import com.pavbatol.tmi.app.exception.ValidationException;
 import com.pavbatol.tmi.item.model.Item;
+import com.pavbatol.tmi.item.model.ItemSort;
 import com.pavbatol.tmi.item.model.ItemType;
 import com.pavbatol.tmi.item.model.QItem;
 import com.querydsl.core.BooleanBuilder;
@@ -18,7 +19,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class CustomItemRepositoryImpl implements CustomItemRepository {
-    public static final String ID = "id";
+    public static final String ID = ItemSort.ID.getFieldName();
     private final EntityManager entityManager;
     private boolean onlySort;
 
@@ -33,6 +34,9 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
         JPAQuery<Item> query = new JPAQuery<>(entityManager);
 
         checkAndCorrectArguments(lastIdValue, lastSortFieldValue, sortFieldName);
+        if (lastIdValue == null || lastSortFieldValue == null) {
+            onlySort = true;
+        }
 
         EnumPath<ItemType> enumPath = Expressions.enumPath(ItemType.class, qItem, sortFieldName);
 
@@ -71,49 +75,6 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
         return query.from(qItem).where(builder).fetch();
     }
 
-//    /**
-//     * Allowed<br>
-//     * lastIdValue == null, lastSortFieldValue == null, sortFieldName != null<br>
-//     * lastIdValue != null, lastSortFieldValue != null, sortFieldName != null<br>
-//     * lastIdValue != null, lastSortFieldValue == null, sortFieldName == ID<br>
-//     * lastIdValue != null, lastSortFieldValue == null, sortFieldName == null<br>
-//     * lastIdValue == null, lastSortFieldValue == null, sortFieldName == null<br>
-//     */
-//    private void checkAndCorrectArguments(Long lastIdValue, String lastSortFieldValue, String sortFieldName) {
-//        String areCorrect = "Input arguments are correct";
-//        if ((lastIdValue == null && lastSortFieldValue == null && sortFieldName != null)
-//                || (lastIdValue != null && lastSortFieldValue != null && sortFieldName != null)) {
-//            log.debug(areCorrect);
-//        } else if (lastIdValue != null && lastSortFieldValue == null && ID.equals(sortFieldName)) {
-//            log.debug(areCorrect);
-//            lastSortFieldValue = String.valueOf(lastIdValue);
-//        } else if (lastIdValue != null && lastSortFieldValue == null && sortFieldName == null) {
-//            log.debug(areCorrect);
-//            lastSortFieldValue = String.valueOf(lastIdValue);
-//            sortFieldName = ID;
-//        } else if (lastIdValue == null && lastSortFieldValue == null && sortFieldName == null) {
-//            log.debug(areCorrect);
-//            sortFieldName = ID;
-//        } else {
-//            throw new ValidationException("Specify arguments 'lastIdValue', 'lastSortFieldValue', 'sortFieldName'");
-//        }
-//
-////        if (lastIdValue != null && sortFieldName == null) {
-////            lastSortFieldValue = lastSortFieldValue != null ? lastSortFieldValue : String.valueOf(lastIdValue);
-////            if (String.valueOf(lastIdValue).equals(lastSortFieldValue)) {
-////                sortFieldName = ID;
-////            }
-////        }
-////        if (sortFieldName != null && lastIdValue != null && lastSortFieldValue != null) {
-////            if (ID.equals(sortFieldName) && !String.valueOf(lastIdValue).equals(lastSortFieldValue)) {
-////                throw new ValidationException("The sorting field denoted by " + ID + ", the values of 'lastIdValue' and 'lastSortFieldValue' diverge");
-////            }
-////        }
-////        if (lastSortFieldValue != null && (lastIdValue == null || sortFieldName == null)) {
-////            throw new ValidationException("Missing 'lastIdValue' or 'sortFieldName' argument when specifying 'lastSortFieldValue'");
-////        }
-//    }
-
     private void checkAndCorrectArguments(Long lastIdValue, String lastSortFieldValue, String sortFieldName) {
         if (!(lastIdValue == null && lastSortFieldValue == null)
                 && !(lastIdValue != null && lastSortFieldValue != null && sortFieldName != null)) {
@@ -121,9 +82,6 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
         }
         if (sortFieldName == null) {
             sortFieldName = ID;
-        }
-        if (lastIdValue == null || lastSortFieldValue == null) {
-            onlySort = true;
         }
     }
 }
