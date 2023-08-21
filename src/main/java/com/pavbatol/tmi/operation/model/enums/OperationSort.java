@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum OperationSort {
     ID("id"),
     TYPE("type"),
-    TIMESTAMP("timestamp");
+    TIMESTAMP("operatedOn");
 
     private final String fieldName;
 

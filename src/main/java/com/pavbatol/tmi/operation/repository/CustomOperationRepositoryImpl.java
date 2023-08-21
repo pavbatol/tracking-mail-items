@@ -38,8 +38,7 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
             onlySort = true;
         }
 
-//        EnumPath<OperationSort> enumPath = Expressions.enumPath(OperationSort.class, qItem, sortFieldName);
-        EnumPath<OperationType> enumPath = Expressions.enumPath(OperationType.class, qItem, sortFieldName);
+        EnumPath<OperationSort> enumPath = Expressions.enumPath(OperationSort.class, qItem, sortFieldName);
 
         if (ID.equals(sortFieldName)) {
             query = direction == Sort.Direction.DESC
@@ -53,22 +52,10 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
 
         if (!onlySort) {
             if (ID.equals(sortFieldName)) {
-//                if (direction == Sort.Direction.DESC) {
-//                    builder.and(qItem.id.lt(lastIdValue));
-//                } else {
-//                    builder.and(qItem.id.gt(lastIdValue));
-//                }
                 builder.and(direction == Sort.Direction.DESC
                         ? qItem.id.lt(lastIdValue)
                         : qItem.id.gt(lastIdValue));
             } else {
-//                if (direction == Sort.Direction.DESC) {
-//                    builder.and(enumPath.stringValue().lt(lastSortFieldValue)
-//                            .or(enumPath.stringValue().eq(lastSortFieldValue).and(qItem.id.lt(lastIdValue))));
-//                } else {
-//                    builder.and(enumPath.stringValue().gt(lastSortFieldValue)
-//                            .or(enumPath.stringValue().eq(lastSortFieldValue).and(qItem.id.gt(lastIdValue))));
-//                }
                 builder.and(direction == Sort.Direction.DESC
                         ? enumPath.stringValue().lt(lastSortFieldValue)
                         .or(enumPath.stringValue().eq(lastSortFieldValue).and(qItem.id.lt(lastIdValue)))
