@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -77,6 +78,17 @@ public class OperationController {
         OperationSort operationSort = sort != null ? OperationSort.from(sort) : null;
         Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
         List<OperationDto> body = service.findAll(filter, lastIdValue, lastSortFieldValue, operationSort, sortDirection, pageSize);
+        return ResponseEntity.ok(body);
+    }
+
+    @GetMapping("/track/{itemId}")
+    @Operation(summary = "getItemTrack", description = "find all Operations for Item by itemId and date-range")
+    public ResponseEntity<List<OperationDto>> getItemTrack(
+            @PathVariable("itemId") Long itemId,
+            @RequestParam(value = "start", required = false) LocalDateTime start,
+            @RequestParam(value = "end", required = false) LocalDateTime end) {
+        log.debug("GET getItemTrack() with itemId: {}, start: {}, end: {}", itemId, start, end);
+        List<OperationDto> body = service.getItemTrack(itemId, start, end);
         return ResponseEntity.ok(body);
     }
 }

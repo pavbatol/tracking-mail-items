@@ -7,6 +7,7 @@ import com.pavbatol.tmi.operation.model.enums.OperationSort;
 import com.pavbatol.tmi.operation.model.filter.OperationFilter;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OperationService {
@@ -24,4 +25,6 @@ public interface OperationService {
                                OperationSort sort,
                                Sort.Direction direction,
                                Integer limit);
+
+    List<OperationDto> getItemTrack(Long itemId, LocalDateTime start, LocalDateTime end);
 }

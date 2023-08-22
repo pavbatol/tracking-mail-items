@@ -83,4 +83,13 @@ public class OperationServiceImpl implements OperationService {
                 ENTITY_SIMPLE_NAME, found.size(), lastIdValue, lastSortFieldValue, operationSort.getFieldName(), direction, limit);
         return mapper.toDtos(found);
     }
+
+    @Override
+    public List<OperationDto> getItemTrack(Long itemId, LocalDateTime start, LocalDateTime end) {
+        start = start == null ? LocalDateTime.of(1970, 1, 1, 0, 0, 0) : start;
+        end = end == null ? LocalDateTime.now() : end;
+        List<Operation> found = repository.findAllByItemIdAndOperatedOnBetween(itemId, start, end);
+        log.debug("Found {}s in the amount of {}, by itemId: {}, start: {}, end: {}", ENTITY_SIMPLE_NAME, found.size(), itemId, start, end);
+        return mapper.toDtos(found);
+    }
 }
