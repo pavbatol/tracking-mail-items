@@ -72,6 +72,7 @@ public class OperationServiceImpl implements OperationService {
         }
 
         List<Operation> found = repository.findAllByPagination(
+                filter,
                 lastIdValue,
                 lastSortFieldValue,
                 operationSort.getFieldName(),

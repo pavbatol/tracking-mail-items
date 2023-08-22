@@ -1,9 +1,11 @@
 package com.pavbatol.tmi.operation.repository;
 
-import com.pavbatol.tmi.app.exception.ValidationException;
 import com.pavbatol.tmi.operation.model.Operation;
 import com.pavbatol.tmi.operation.model.QOperation;
 import com.pavbatol.tmi.operation.model.enums.OperationSort;
+import com.pavbatol.tmi.operation.model.enums.OperationType;
+import com.pavbatol.tmi.operation.model.filter.OperationFilter;
+import com.pavbatol.tmi.operation.model.filter.OperationFilterHelper;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.Expressions;
@@ -22,10 +24,10 @@ import static com.pavbatol.tmi.app.util.Checker.checkPaginationArguments;
 public class CustomOperationRepositoryImpl implements CustomOperationRepository {
     public static final String ID = OperationSort.ID.getFieldName();
     private final EntityManager entityManager;
-    private boolean onlySort;
 
     @Override
-    public List<Operation> findAllByPagination(Long lastIdValue,
+    public List<Operation> findAllByPagination(OperationFilter filter,
+                                               Long lastIdValue,
                                                String lastSortFieldValue,
                                                String sortFieldName,
                                                Sort.Direction direction,
@@ -33,6 +35,7 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
         QOperation qItem = QOperation.operation;
         BooleanBuilder builder = new BooleanBuilder();
         JPAQuery<Operation> query = new JPAQuery<>(entityManager);
+        boolean onlySort = false;
 
         checkPaginationArguments(ID, sortFieldName, lastIdValue, lastSortFieldValue);
         if (sortFieldName == null) {
@@ -42,7 +45,7 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
             onlySort = true;
         }
 
-        EnumPath<OperationSort> enumPath = Expressions.enumPath(OperationSort.class, qItem, sortFieldName);
+        EnumPath<OperationType> enumPath = Expressions.enumPath(OperationType.class, qItem, sortFieldName);
 
         if (ID.equals(sortFieldName)) {
             query = direction == Sort.Direction.DESC
@@ -67,6 +70,9 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
                         .or(enumPath.stringValue().eq(lastSortFieldValue).and(qItem.id.gt(lastIdValue))));
             }
         }
+
+        BooleanBuilder operationBooleanBuilder = OperationFilterHelper.getOperationBooleanBuilder(filter);
+        builder.and(operationBooleanBuilder);
 
         if (limit != null) {
             query.limit(limit);
