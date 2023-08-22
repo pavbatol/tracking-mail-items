@@ -86,9 +86,11 @@ public class OperationController {
     public ResponseEntity<List<OperationDto>> getItemTrack(
             @PathVariable("itemId") Long itemId,
             @RequestParam(value = "start", required = false) LocalDateTime start,
-            @RequestParam(value = "end", required = false) LocalDateTime end) {
-        log.debug("GET getItemTrack() with itemId: {}, start: {}, end: {}", itemId, start, end);
-        List<OperationDto> body = service.getItemTrack(itemId, start, end);
+            @RequestParam(value = "end", required = false) LocalDateTime end,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        log.debug("GET getItemTrack() with itemId: {}, start: {}, end: {}, direction: {}", itemId, start, end, direction);
+        Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
+        List<OperationDto> body = service.getItemTrack(itemId, start, end, sortDirection);
         return ResponseEntity.ok(body);
     }
 }

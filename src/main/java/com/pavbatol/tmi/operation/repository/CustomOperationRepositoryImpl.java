@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.pavbatol.tmi.app.util.Checker.checkPaginationArguments;
+
 @Repository
 @RequiredArgsConstructor
 public class CustomOperationRepositoryImpl implements CustomOperationRepository {
@@ -32,7 +34,10 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
         BooleanBuilder builder = new BooleanBuilder();
         JPAQuery<Operation> query = new JPAQuery<>(entityManager);
 
-        checkAndCorrectArguments(lastIdValue, lastSortFieldValue, sortFieldName);
+        checkPaginationArguments(ID, sortFieldName, lastIdValue, lastSortFieldValue);
+        if (sortFieldName == null) {
+            sortFieldName = ID;
+        }
         if (lastIdValue == null || lastSortFieldValue == null) {
             onlySort = true;
         }
@@ -68,19 +73,5 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
         }
 
         return query.from(qItem).where(builder).fetch();
-    }
-
-    private void checkAndCorrectArguments(Long lastIdValue, String lastSortFieldValue, String sortFieldName) {
-        if (!(lastIdValue == null && lastSortFieldValue == null)
-                && !(lastIdValue != null && lastSortFieldValue != null && sortFieldName != null)) {
-            throw new ValidationException("Specify arguments 'lastIdValue', 'lastSortFieldValue', 'sortFieldName'");
-        }
-        if (ID.equals(sortFieldName) && lastIdValue != null
-                && !String.valueOf(lastIdValue).equals(lastSortFieldValue)) {
-            throw new ValidationException("When sorting by id, the values must match for 'lastIdValue', 'lastSortFieldValue'");
-        }
-        if (sortFieldName == null) {
-            sortFieldName = ID;
-        }
     }
 }

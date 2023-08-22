@@ -60,7 +60,6 @@ public class ItemServiceImpl implements ItemService {
                                  ItemSort itemSort,
                                  Sort.Direction direction,
                                  Integer limit) {
-
         if ((lastIdValue != null || lastSortFieldValue != null) && itemSort == null) {
             throw new ValidationException("Missing 'itemSort' when specified 'lastIdValue' or 'lastSortFieldValue' argument");
         }

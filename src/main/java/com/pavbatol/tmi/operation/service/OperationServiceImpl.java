@@ -12,6 +12,7 @@ import com.pavbatol.tmi.operation.model.filter.OperationFilter;
 import com.pavbatol.tmi.operation.repository.OperationJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +64,6 @@ public class OperationServiceImpl implements OperationService {
                                       OperationSort operationSort,
                                       Sort.Direction direction,
                                       Integer limit) {
-
-
         if ((lastIdValue != null || lastSortFieldValue != null) && operationSort == null) {
             throw new ValidationException("Missing 'operationSort' when specified 'lastIdValue' or 'lastSortFieldValue' argument");
         }
@@ -85,11 +84,13 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public List<OperationDto> getItemTrack(Long itemId, LocalDateTime start, LocalDateTime end) {
+    public List<OperationDto> getItemTrack(Long itemId, LocalDateTime start, LocalDateTime end, Sort.Direction direction) {
         start = start == null ? LocalDateTime.of(1970, 1, 1, 0, 0, 0) : start;
         end = end == null ? LocalDateTime.now() : end;
-        List<Operation> found = repository.findAllByItemIdAndOperatedOnBetween(itemId, start, end);
-        log.debug("Found {}s in the amount of {}, by itemId: {}, start: {}, end: {}", ENTITY_SIMPLE_NAME, found.size(), itemId, start, end);
+        List<Operation> found = repository.findAllByItemIdAndOperatedOnBetween(itemId, start, end,
+                PageRequest.of(0, Integer.MAX_VALUE, Sort.by(direction, OperationSort.TIMESTAMP.getFieldName())));
+        log.debug("Found {}s in the amount of {}, by itemId: {}, start: {}, end: {}, direction: {}",
+                ENTITY_SIMPLE_NAME, found.size(), itemId, start, end, direction);
         return mapper.toDtos(found);
     }
 }

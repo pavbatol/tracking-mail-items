@@ -26,5 +26,8 @@ public interface OperationService {
                                Sort.Direction direction,
                                Integer limit);
 
-    List<OperationDto> getItemTrack(Long itemId, LocalDateTime start, LocalDateTime end);
+    List<OperationDto> getItemTrack(Long itemId,
+                                    LocalDateTime start,
+                                    LocalDateTime end,
+                                    Sort.Direction direction);
 }
