@@ -4,7 +4,6 @@ import com.pavbatol.tmi.app.exception.ValidationException;
 import com.pavbatol.tmi.operation.model.Operation;
 import com.pavbatol.tmi.operation.model.QOperation;
 import com.pavbatol.tmi.operation.model.enums.OperationSort;
-import com.pavbatol.tmi.operation.model.enums.OperationType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.Expressions;
@@ -76,31 +75,12 @@ public class CustomOperationRepositoryImpl implements CustomOperationRepository 
                 && !(lastIdValue != null && lastSortFieldValue != null && sortFieldName != null)) {
             throw new ValidationException("Specify arguments 'lastIdValue', 'lastSortFieldValue', 'sortFieldName'");
         }
+        if (ID.equals(sortFieldName) && lastIdValue != null
+                && !String.valueOf(lastIdValue).equals(lastSortFieldValue)) {
+            throw new ValidationException("When sorting by id, the values must match for 'lastIdValue', 'lastSortFieldValue'");
+        }
         if (sortFieldName == null) {
             sortFieldName = ID;
         }
     }
 }
-
-/*
-
-        SimplePath<Long> enumPath = Expressions.path(Long.class, qItem, sortFieldName);
-//        SimplePath<String> enumPath = Expressions.path(String.class, qItem, sortFieldName);
-//        SimplePath<?> enumPath = Expressions.path(ItemSort.ID.getClazz(), qItem, sortFieldName);
-
-        String fieldName = "id"; // здесь должно быть имя поля, по которому нужно сортировать
-        PathBuilder<Item> path = new PathBuilder<>(Item.class, qItem.getMetadata());
-        ComparableExpressionBase<Long> fieldExpression = path.getNumber(fieldName, Long.class);
-        query.orderBy(fieldExpression.asc());
-
-
-//        Long last = 10L;
-//        ComparableExpressionBase<Long> fieldExpression2 = path.getNumber(fieldName, Long.class);
-//        BooleanBuilder builder2= new BooleanBuilder();
-//        builder2.and(Expressions.asBoolean(fieldExpression2.lt(last)));
-
-        Long last = 10L;
-        ComparableExpressionBase<Long> fieldExpression2 = path.getNumber(fieldName, Long.class);
-        BooleanBuilder builder2 = new BooleanBuilder();
-        builder2.and(fieldExpression2.lt(last).isTrue());
- */

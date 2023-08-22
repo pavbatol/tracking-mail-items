@@ -19,9 +19,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "operations", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_operations_item_id_post_code", columnNames = {"item_id", "post_code"})
-})
+@Table(name = "operations")
 public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
