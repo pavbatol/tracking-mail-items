@@ -31,9 +31,10 @@ public class ItemController {
 
     @PostMapping
     @Operation(summary = "add", description = "adding a Item")
-    ResponseEntity<ItemDto> add(@Valid @RequestBody ItemDtoAddRequest dto) {
-        log.debug("POST (add) with dto: {}", dto);
-        ItemDto body = service.add(dto);
+    ResponseEntity<ItemDto> add(@Valid @RequestBody ItemDtoAddRequest dto,
+                                @RequestParam(value = "postCode") @PositiveOrZero Integer postCode) {
+        log.debug("POST (add) with dto: {}, postCode: {},", dto, postCode);
+        ItemDto body = service.add(postCode, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 

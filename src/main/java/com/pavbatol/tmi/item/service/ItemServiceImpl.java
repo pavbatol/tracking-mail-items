@@ -9,10 +9,16 @@ import com.pavbatol.tmi.item.mapper.ItemMapper;
 import com.pavbatol.tmi.item.model.Item;
 import com.pavbatol.tmi.item.model.enums.ItemSort;
 import com.pavbatol.tmi.item.repository.ItemJpaRepository;
+import com.pavbatol.tmi.operation.dto.OperationDtoAddRequest;
+import com.pavbatol.tmi.operation.model.enums.OperationType;
+import com.pavbatol.tmi.operation.service.OperationService;
+import com.pavbatol.tmi.post.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,13 +29,23 @@ public class ItemServiceImpl implements ItemService {
     private static final String ENTITY_SIMPLE_NAME = Item.class.getSimpleName();
     private final ItemJpaRepository repository;
     private final ItemMapper mapper;
+    private final OperationService operationService;
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
-    public ItemDto add(ItemDtoAddRequest dto) {
+    public ItemDto add(Integer postCode, ItemDtoAddRequest dto) {
         Item entity = mapper.toEntity(dto);
         Item saved = repository.save(entity);
         log.debug("New {} saved: {}", ENTITY_SIMPLE_NAME, saved);
-        return mapper.toDto(saved);
+
+        ItemDto itemDto = mapper.toDto(saved);
+        operationService.add(new OperationDtoAddRequest(
+                itemDto,
+                new PostDto(postCode, null, null),
+                OperationType.REGISTER
+        ));
+
+        return itemDto;
     }
 
     @Override

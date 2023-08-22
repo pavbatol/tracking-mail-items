@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface ItemService {
-    ItemDto add(ItemDtoAddRequest dto);
+    ItemDto add(Integer postCode, ItemDtoAddRequest dto);
 
     ItemDto update(Long itemId, ItemDtoUpdate dto);
 
