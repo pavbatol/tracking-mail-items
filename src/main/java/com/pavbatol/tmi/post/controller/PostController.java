@@ -63,8 +63,8 @@ public class PostController {
     @GetMapping
     @Operation(summary = "findAll", description = "find all Posts getting page by page")
     public ResponseEntity<List<PostDto>> findAll(
-            @PositiveOrZero() @RequestParam(value = "lastPostId", defaultValue = "0") Integer lastPostId,
-            @Min(1) @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+            @RequestParam(value = "lastPostId", defaultValue = "0") @PositiveOrZero() Integer lastPostId,
+            @RequestParam(value = "pageSize", defaultValue = "10") @Min(1) Integer pageSize) {
         log.debug("GET findAll() with lastPostId: {}, size: {}", lastPostId, pageSize);
         List<PostDto> body = service.findAll(lastPostId, pageSize);
         return ResponseEntity.ok(body);
