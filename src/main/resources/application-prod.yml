@@ -19,7 +19,6 @@ spring:
     init:
       mode: always
       schema-locations: classpath:sql/schema.sql
-#      data-locations: classpath:sql/data.sql
   banner:
     location: banner/banner.txt
   mvc:
