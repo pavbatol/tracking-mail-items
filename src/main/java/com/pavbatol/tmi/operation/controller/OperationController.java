@@ -75,7 +75,7 @@ public class OperationController {
             @RequestParam(value = "pageSize", defaultValue = "10") @Min(1) Integer pageSize) {
         log.debug("GET findAll() with filter: {}, lastItemId: {}, lastSortFieldValue: {}, sort: {}, direction: {}, pageSize: {}",
                 filter, lastIdValue, lastSortFieldValue, sort, direction, pageSize);
-        OperationSort operationSort = sort != null ? OperationSort.from(sort) : null;
+        OperationSort operationSort = sort != null && !sort.trim().isEmpty() ? OperationSort.from(sort) : null;
         Sort.Direction sortDirection = Sort.Direction.valueOf(direction.toUpperCase());
         List<OperationDto> body = service.findAll(filter, lastIdValue, lastSortFieldValue, operationSort, sortDirection, pageSize);
         return ResponseEntity.ok(body);

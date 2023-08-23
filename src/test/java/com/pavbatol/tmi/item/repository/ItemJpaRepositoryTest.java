@@ -71,6 +71,5 @@ class ItemJpaRepositoryTest {
         assertThat(items.get(5).getType()).isEqualTo(ItemType.LETTER);
         assertThat(items.get(0).getId()).isEqualTo(3L);
         assertThat(items.get(0).getType()).isEqualTo(ItemType.WRAPPER);
-
     }
 }

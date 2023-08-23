@@ -44,7 +44,7 @@ class PostControllerTest {
 
     @Test
     @SneakyThrows
-    void add() {
+    void add_shouldInvokeService() {
         PostDtoAddRequest dtoAddRequest = new PostDtoAddRequest(POST_CODE, NAME, ADDRESS);
 
         when(service.add(dtoAddRequest)).thenReturn(postDto);
@@ -64,7 +64,7 @@ class PostControllerTest {
 
     @Test
     @SneakyThrows
-    void update() {
+    void update_shouldInvokeService() {
         Integer postId = POST_CODE;
         PostDtoUpdate dtoUpdate = new PostDtoUpdate(NAME, ADDRESS);
 
@@ -82,7 +82,7 @@ class PostControllerTest {
 
     @Test
     @SneakyThrows
-    void remove() {
+    void remove_shouldInvokeService() {
         Integer postId = POST_CODE;
 
         mockMvc.perform(delete(URL_TEMPLATE + "/{postId}", postId)
@@ -95,7 +95,7 @@ class PostControllerTest {
 
     @Test
     @SneakyThrows
-    void findById() {
+    void findById_shouldInvokeService() {
         Integer postId = POST_CODE;
 
         when(service.findById(postId)).thenReturn(postDto);
@@ -111,7 +111,7 @@ class PostControllerTest {
 
     @Test
     @SneakyThrows
-    void findAll() {
+    void findAll_shouldInvokeService_whenAllParametersAreFill() {
         Integer lastPostId = POST_CODE;
         Integer pageSize = 100;
         List<PostDto> posts = List.of(postDto);
