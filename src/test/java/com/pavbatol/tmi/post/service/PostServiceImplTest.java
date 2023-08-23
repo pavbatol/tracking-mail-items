@@ -51,7 +51,7 @@ class PostServiceImplTest {
     }
 
     @Test
-    void add_ShouldCorrectMappingAndRevokeRepoForExistsAndSave() {
+    void add_shouldCorrectMappingAndRevokeRepoForExistsAndSave() {
         PostDtoAddRequest dtoAddRequest = new PostDtoAddRequest(POST_CODE, NAME, ADDRESS);
 
         when(repository.existsById(anyInt())).thenReturn(false);
@@ -65,16 +65,16 @@ class PostServiceImplTest {
     }
 
     @Test
-    void update_ShouldCheckPostCodeAndOnlyOneFieldIsUpdated() {
+    void update_shouldCheckPostCodeAndOnlyOneFieldIsUpdated() {
         String newName = NAME + "updated";
         PostDtoUpdate dtoUpdate = new PostDtoUpdate(newName, ADDRESS);
 
         when(repository.findById(anyInt())).thenReturn(Optional.of(post));
 
         when(repository.save(any())).thenAnswer(invocationOnMock -> {
-            Post past1 = invocationOnMock.getArgument(0, Post.class);
-            past1.setPostCode(post.getPostCode());
-            return past1;
+            Post post1 = invocationOnMock.getArgument(0, Post.class);
+            post1.setPostCode(post.getPostCode());
+            return post1;
         });
 
         PostDto updated = service.update(post.getPostCode(), dtoUpdate);
