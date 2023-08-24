@@ -1,26 +1,19 @@
 package com.pavbatol.tmi.item.repository;
 
+import com.pavbatol.tmi.CustomDataJpaTest;
 import com.pavbatol.tmi.item.model.Item;
 import com.pavbatol.tmi.item.model.enums.ItemSort;
 import com.pavbatol.tmi.item.model.enums.ItemType;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource(locations = "classpath:application-test.yml")
-@TestPropertySource(properties = {"spring.datasource.url=jdbc:h2:mem:test"})
+@CustomDataJpaTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class ItemJpaRepositoryTest {
     private final ItemJpaRepository repository;

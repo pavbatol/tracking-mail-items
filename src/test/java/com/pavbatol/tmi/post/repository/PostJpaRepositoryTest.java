@@ -1,25 +1,18 @@
 package com.pavbatol.tmi.post.repository;
 
+import com.pavbatol.tmi.CustomDataJpaTest;
 import com.pavbatol.tmi.post.model.Post;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource(locations = "classpath:application-test.yml")
-@TestPropertySource(properties = {"spring.datasource.url=jdbc:h2:mem:test"})
+@CustomDataJpaTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PostJpaRepositoryTest {
     private final PostJpaRepository repository;
@@ -38,7 +31,7 @@ class PostJpaRepositoryTest {
         assertThat(found).isNotNull();
         assertThat(found).size().isEqualTo(ExpectedPostTableRecordsSize);
 
-        //pagination
+        //--
         lastPostId = 400400;
         long ExpectedPostSelectedRecordsSize = 1L;
 
@@ -47,7 +40,7 @@ class PostJpaRepositoryTest {
         assertThat(found).isNotNull();
         assertThat(found).size().isEqualTo(ExpectedPostSelectedRecordsSize);
 
-        //pagination
+        //--
         lastPostId = 100100;
         pageSize = 3;
         pageRequest = PageRequest.of(0, pageSize, Sort.by(direction, sortFieldName));
@@ -59,7 +52,7 @@ class PostJpaRepositoryTest {
         assertThat(found).size().isEqualTo(ExpectedPostSelectedRecordsSize);
         assertThat(found.get(0).getPostCode()).isEqualTo(200200);
 
-        //pagination
+        //--
         lastPostId = 300300;
         pageSize = 100;
         direction = Sort.Direction.DESC;
