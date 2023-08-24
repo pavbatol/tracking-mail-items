@@ -14,6 +14,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Tracking Mail Items</name>
 
+    <packaging>war</packaging>
+
     <properties>
         <java.version>11</java.version>
         <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
@@ -106,7 +108,15 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <executable>true</executable>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
