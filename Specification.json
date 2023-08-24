@@ -1,0 +1,927 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Post office",
+      "description": "API for working with Posts"
+    },
+    {
+      "name": "Postal item",
+      "description": "API for working with Items"
+    },
+    {
+      "name": "Operation of Post Office",
+      "description": "API for working with Operations"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "tags": [
+          "Post office"
+        ],
+        "summary": "findAll",
+        "description": "find all Posts getting page by page",
+        "operationId": "findAll",
+        "parameters": [
+          {
+            "name": "lastPostId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Post office"
+        ],
+        "summary": "add",
+        "description": "adding a Post",
+        "operationId": "add",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDtoAddRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations": {
+      "get": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "findAll",
+        "description": "find all Operations getting page by page by filter and KeySet pagination",
+        "operationId": "findAll_1",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OperationFilter"
+            }
+          },
+          {
+            "name": "lastIdValue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "lastSortFieldValue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OperationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "add",
+        "description": "adding a Operation",
+        "operationId": "add_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OperationDtoAddRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items": {
+      "get": {
+        "tags": [
+          "Postal item"
+        ],
+        "summary": "findAll",
+        "description": "find all Items getting page by page by KeySet pagination",
+        "operationId": "findAll_2",
+        "parameters": [
+          {
+            "name": "lastIdValue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "lastSortFieldValue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Postal item"
+        ],
+        "summary": "add",
+        "description": "adding a Item",
+        "operationId": "add_2",
+        "parameters": [
+          {
+            "name": "postCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemDtoAddRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{postId}": {
+      "get": {
+        "tags": [
+          "Post office"
+        ],
+        "summary": "findById",
+        "description": "getting a Post by Id",
+        "operationId": "findById",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Post office"
+        ],
+        "summary": "remove",
+        "description": "deleting a Post",
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Post office"
+        ],
+        "summary": "update",
+        "description": "Post update",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostDtoUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/{operationId}": {
+      "get": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "findById",
+        "description": "getting a Operation by Id",
+        "operationId": "findById_1",
+        "parameters": [
+          {
+            "name": "operationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "remove",
+        "description": "deleting a Operation",
+        "operationId": "remove_1",
+        "parameters": [
+          {
+            "name": "operationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "update",
+        "description": "Operation update",
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "operationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OperationDtoUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{itemId}": {
+      "get": {
+        "tags": [
+          "Postal item"
+        ],
+        "summary": "findById",
+        "description": "getting a item by Id",
+        "operationId": "findById_2",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Postal item"
+        ],
+        "summary": "remove",
+        "description": "deleting a Item",
+        "operationId": "remove_2",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Postal item"
+        ],
+        "summary": "update",
+        "description": "Item update",
+        "operationId": "update_2",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemDtoUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/track/{itemId}": {
+      "get": {
+        "tags": [
+          "Operation of Post Office"
+        ],
+        "summary": "getItemTrack",
+        "description": "find all Operations for Item by itemId and date-range",
+        "operationId": "getItemTrack",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OperationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PostDtoAddRequest": {
+        "required": [
+          "postAddress",
+          "postCode",
+          "postName"
+        ],
+        "type": "object",
+        "properties": {
+          "postCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "postName": {
+            "type": "string"
+          },
+          "postAddress": {
+            "type": "string"
+          }
+        }
+      },
+      "PostDto": {
+        "type": "object",
+        "properties": {
+          "postCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "postName": {
+            "type": "string"
+          },
+          "postAddress": {
+            "type": "string"
+          }
+        }
+      },
+      "ItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LETTER",
+              "PARCEL",
+              "WRAPPER",
+              "POSTCARD"
+            ]
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "receiverAddress": {
+            "type": "string"
+          },
+          "receiverName": {
+            "type": "string"
+          }
+        }
+      },
+      "OperationDtoAddRequest": {
+        "required": [
+          "item",
+          "post",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/ItemDto"
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "REGISTER",
+              "ARRIVE",
+              "DEPART",
+              "HAND_OVER"
+            ]
+          }
+        }
+      },
+      "OperationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "item": {
+            "$ref": "#/components/schemas/ItemDto"
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "REGISTER",
+              "ARRIVE",
+              "DEPART",
+              "HAND_OVER"
+            ]
+          },
+          "operatedOn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ItemDtoAddRequest": {
+        "required": [
+          "post",
+          "receiverAddress",
+          "receiverName",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "LETTER",
+              "PARCEL",
+              "WRAPPER",
+              "POSTCARD"
+            ]
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "receiverAddress": {
+            "type": "string"
+          },
+          "receiverName": {
+            "type": "string"
+          }
+        }
+      },
+      "PostDtoUpdate": {
+        "type": "object",
+        "properties": {
+          "postName": {
+            "pattern": ".*\\S.*",
+            "type": "string"
+          },
+          "postAddress": {
+            "pattern": ".*\\S.*",
+            "type": "string"
+          }
+        }
+      },
+      "OperationDtoUpdate": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/ItemDto"
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "REGISTER",
+              "ARRIVE",
+              "DEPART",
+              "HAND_OVER"
+            ]
+          }
+        }
+      },
+      "ItemDtoUpdate": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "LETTER",
+              "PARCEL",
+              "WRAPPER",
+              "POSTCARD"
+            ]
+          },
+          "post": {
+            "$ref": "#/components/schemas/PostDto"
+          },
+          "receiverAddress": {
+            "pattern": ".*\\S.*",
+            "type": "string"
+          },
+          "receiverName": {
+            "pattern": ".*\\S.*",
+            "type": "string"
+          }
+        }
+      },
+      "OperationFilter": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "rangeStartOperatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rangeEndOperatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "itemIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "postCodes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      }
+    }
+  }
+}
