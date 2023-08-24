@@ -8,6 +8,9 @@
 PARCEL, WRAPPER, POSTCARD), по списку id, по списку почтовых индексов, по диапазону даты операции. Можно указывать 
 одновременно все фильтры или выборочно. Используется KeySet пагинация.
 
+**Покрытие тестами:**
+![TestsScreenshot.png](TestsScreenshot.png)
+
 **Стек:**
 - Java 11
 - Spring Boot
@@ -22,8 +25,8 @@ PARCEL, WRAPPER, POSTCARD), по списку id, по списку почтов
     - OpenAPI definition: localhost:8080/docs/swagger-ui.html
     - OpenAPI Docs: localhost:8080/docs
 - specification
-    - [Specification.json](Specification.json)
+    - [Specification.json](Specification.json) (для визуализации вставьте в любой редактор для Swagger, например этот: https://editor.swagger.io/)
 
 **Запуск**
 * Собрать проект командой: `mvn clean package`
-* Запустить из каталога, содержащего собранный tracking-mail-items-0.0.1-SNAPSHOT.war:
+* Запустить из каталога, содержащего собранный tracking-mail-items-0.0.1-SNAPSHOT.war
