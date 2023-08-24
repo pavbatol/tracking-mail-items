@@ -99,7 +99,7 @@ class ItemControllerTest {
     void remove_shouldInvokeService() {
         long itemId = ID;
 
-        mockMvc.perform(delete(URL_TEMPLATE + "/{postId}", itemId)
+        mockMvc.perform(delete(URL_TEMPLATE + "/{itemId}", itemId)
                         .contentType(APPLICATION_JSON)
                 )
                 .andExpect(status().is2xxSuccessful());
